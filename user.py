@@ -1,6 +1,5 @@
 import sqlite3
 import sys
-import random 
 class User:
     def __init__(self, databaseName="todolist.db"):
         self.databaseName = databaseName

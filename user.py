@@ -15,7 +15,7 @@ class User:
             print("Failed database connection.")
             sys.exit()
         cursor = connection.cursor()
-        query = "SELECT id, password FROM User WHERE username=?"
+        query = "SELECT id, password FROM Users WHERE username=?"
         data = (username,)
         cursor.execute(query, data)
         result = cursor.fetchall()
@@ -52,8 +52,23 @@ class User:
             sys.exit()
         cursor = connection.cursor()
         while(1):
-            return 
+            print("\nCreate Account: ")
+            username = input("New Username: ")
+            password = input("New Password: ")
+            try: 
+                cursor.execute("INSERT INTO Users (usernmae, password) VALUES (?, ?)", (username, password))
+                connection.commit()
+                print("Account created! Please login.")
+                break
+            except sqlite3.IntegrityError:
+                print("Username exists. Try again.")
+                retry = input("Try again? (y/n)").strip().lower()
+                if retry != "y":
+                    print("Account creation canceled.")
+                    break
+        cursor.close()
+        connection.close()
     def getLoggedIn(self):
         return self.loggedIn
-    def gerUserID(self):
+    def getUserID(self):
         return self.userID

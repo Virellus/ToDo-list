@@ -46,5 +46,40 @@ class Manager:
         connection.close()
         print("Reminder added.")
     def view_all(self):
-        pass
-    def delete_i
+        connection, cursor = self._connect()
+        queries = [
+            ("Assignments" ,"due_time"),
+            ("Meetings", "meeting_time"),
+            ("Reminders", None)
+        ]
+        for table, time_col in queries:
+            print(f"\n{table}")
+            if time_col:
+                cursor.execute(f"SELECT id, title, description, {time_col}, completed FROM {table} WHERE user_id=? ORDER BY {time_col}", (self.user_id,))
+                rows = cursor.fetchall()
+                for row in rows:
+                    print(f"ID: {row[0]}, Title: {row[1]}, Due: {row[3]}, Completed: {"Made" if row[4] else "Not Made"}")
+                else:
+                    cursor.execute(f"SELECT id, title, description, completed FROM {table} WHERE user_id=?", (self.user_id,))
+                    rows = cursor.fetchall()
+                    for row in rows:
+                        print(f"ID: {row[0]}, Title: {row[1]}, Completed: {"Made" if row[3] else "Not Made"}")
+        connection.close()
+    def view_items_by_type(self, table, time_col)
+        conn, cursor = self._connect()
+        if time_col:
+            cursor.execute(f"SELECT id, title, description, {time_col}, completed FROM {table} WHERE user_id=? ORDER BY {time_col}", (self.user_id,))
+            rows = cursor.fetchall()
+            for row in rows:
+                print(f"ID: {row[0]}, Title: {row[1]}, Due: {row[3]}, Completed: {"Made" if row[4] else "Not Made"}")
+        else:
+            cursor.execute(f"SELECT id, title, description, completed FROM {table} WHERE user_id=?", (self.user_id,))
+            rows = cursor.fetchall()
+            for row in rows:
+                print(f"ID: {row[0]}, Title: {row[1]}, Completed: {"Made" if row[3] else "Not Made"}")
+        conn.close()
+    def wipe_user_data(self):
+        confirm = input("Are you sure you want to wipe all your to-dos? (y/n): ").lower()
+        if confirm != "y":
+            print("Cancelled.")
+            return

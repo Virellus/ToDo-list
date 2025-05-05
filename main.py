@@ -1,5 +1,5 @@
 from user import *
-from todo import *
+from todo import Manager
 
 def edit_menu(manager):
     while True:
@@ -14,7 +14,7 @@ def edit_menu(manager):
         if choice == "0":
             break
         elif choice == "1":
-            manager.add_asignment()
+            manager.add_assignment()
         elif choice == "2":
             manager.add_meeting()
         elif choice == "3":

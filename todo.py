@@ -2,11 +2,11 @@ import sqlite3
 import sys
 from datetime import datetime
 class Manager:
-    def __init__(self, user_id, databaseName="todolist.db")
+    def __init__(self, user_id, databasename="todolist.db"):
         self.user_id = user_id
-        self.databaseName = databaseName
+        self.databasename = databasename
     def _connect(self):
-        connection = sqlite3.connect(self.db_name)
+        connection = sqlite3.connect(self.databasename)
         cursor = connection.cursor()
         cursor.execute("PRAGMA foreign_keys = ON;")
         return connection, cursor
@@ -65,7 +65,7 @@ class Manager:
                     for row in rows:
                         print(f"ID: {row[0]}, Title: {row[1]}, Completed: {"Made" if row[3] else "Not Made"}")
         connection.close()
-    def view_items_by_type(self, table, time_col)
+    def view_items_by_type(self, table, time_col):
         conn, cursor = self._connect()
         if time_col:
             cursor.execute(f"SELECT id, title, description, {time_col}, completed FROM {table} WHERE user_id=? ORDER BY {time_col}", (self.user_id,))

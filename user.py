@@ -18,7 +18,7 @@ class User:
         data = (username,)
         cursor.execute(query, data)
         result = cursor.fetchall()
-        if(len(result == 0)):
+        if len(result) == 0:
             print("\nUsername or password is incorect.")
             self.userID = ""
             self.loggedIn = False
@@ -55,7 +55,7 @@ class User:
             username = input("New Username: ")
             password = input("New Password: ")
             try: 
-                cursor.execute("INSERT INTO Users (usernmae, password) VALUES (?, ?)", (username, password))
+                cursor.execute("INSERT INTO Users (username, password) VALUES (?, ?)", (username, password))
                 connection.commit()
                 print("Account created! Please login.")
                 break

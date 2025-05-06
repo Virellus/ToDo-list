@@ -8,8 +8,9 @@ def edit_menu(manager):
         print("1. Add Assignment")
         print("2. Add Meeting")
         print("3. Add Reminder")
-        print("4. Delete and Item")
-        print("5. Wipe all tasks")
+        print("4. Edit an Item")
+        print("5. Delete and Item")
+        print("6. Wipe all tasks")
         choice = input("Choose an Option: ")
         if choice == "0":
             break
@@ -20,13 +21,16 @@ def edit_menu(manager):
         elif choice == "3":
             manager.add_reminder()
         elif choice == "4":
-            manager.delete_item()
+            manager.edit_item()
         elif choice == "5":
+            manager.delete_item()
+        elif choice == "6":
             manager.wipe_user_data()
         else:
             print("Invalid option. Try again.")
 def main_menu(user):
     manager = Manager(user.getUserID())
+    manager.auto_delete_expired_items()
     while True: 
         print("\nMain Menu")
         print("0. Logout")
